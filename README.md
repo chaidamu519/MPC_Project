@@ -16,7 +16,7 @@ The state includes the car's position (transformed to car's coordinate), orienta
 
      [x,y,ψ,v,cte,eψ]
      
-![alt text](https://github.com/chaidamu519/MPC/blob/master/Model_Equations.png)
+![alt text](https://github.com/chaidamu519/MPC_Project/blob/master/Model_Equations.png)
   
 ##### 2. Actuator  
 To control the car, two variables are used in an actuator, which are the steering angle and the throttle
