@@ -30,13 +30,17 @@ Throttle: between +1 and -1, which corresponds to a full acceleration and a full
 
 To calculate the cost function, we followed the prototype disccussed in the course. It inculdes the cross-track error, the orientation error, a velocity control to avoid stopping, minimization the use of actuaters and the difference between dequential acutuations.
 
-With no weight settings on different 
+Without tunning on the weights for different costs, the car can run with a speed around 40 mph. Then we added weights before certain costs and trying to improve the model (to reach higher speed at 60 mph e.x.). This is realized by tuning different weights. For example, We increase a lot the weight of the delta gap to achieve a more smooth run.
 
 ### Predictive Horizon
 
-We use 10 time steps with one step of 0.1 s. We started with 25 points and then gradually reduced the number of points. 10 points are found to be sufficient to control the vehicle. Longer temporal horizone means more computational cost.
+We started by using 10 time steps with one step of 0.1 s. We then increase the number of steps to 20 as the velocity increases. In total, the predictive horizon is 2 s and seems sufficient in this simulator. 
+
+Longer temporal horizon might be better but it also means more computational cost. However,if the horizon is too long, the environment will change enough that it won't make sense to predict any further into the future.
 
 We have also tested  0.05 s per step with 10 points, but due to the short length, some sudden turns cannot be fitted properly. This can be solved by increasing the number of points and in addition, a more precise fitting can be realized due to the smaller time step.
+
+
 
 ### Polynomial fitting
 We use a 3-order plynomial for fitting, as suggested by the instructor in the course. Before polynomial fitting, we transform the car's position from global coordinate to car's coordinate. As a result, the car is the origin of the coordinate at (0.0, 0.0) before adding latency. 
