@@ -30,6 +30,8 @@ Throttle: between +1 and -1, which corresponds to a full acceleration and a full
 
 To calculate the cost function, we followed the prototype disccussed in the course. It inculdes the cross-track error, the orientation error, a velocity control to avoid stopping, minimization the use of actuaters and the difference between dequential acutuations.
 
+With no weight settings on different 
+
 ### Predictive Horizon
 
 We use 10 time steps with one step of 0.1 s. We started with 25 points and then gradually reduced the number of points. 10 points are found to be sufficient to control the vehicle. Longer temporal horizone means more computational cost.
