@@ -12,7 +12,7 @@ using Eigen::VectorXd;
 /**
  * TODO: Set the timestep length and duration
  */
-size_t N = 10;
+size_t N = 20;
 double dt = 0.1;
 
 // This value assumes the model presented in the classroom is used.
@@ -28,7 +28,7 @@ double dt = 0.1;
 const double Lf = 2.67;
 
 // Reference Velocity
-double ref_v = 40.0;
+double ref_v = 60.0;
 
 // The solver takes all the state variables and actuator
 // variables in a singular vector. Thus, we should to establish
@@ -65,12 +65,20 @@ class FG_eval {
      
     // Stored in fg[0]
     fg[0] = 0;
+    
+    // Weights 
+     double cte_weight = 500.0;
+     double epsi_weight = 500.0;
+     double v_weight = 1.0;
+     double sequential_delta_weight = 500.0;
+     double sequential_a_weight = 10.0;
+    
      
     // Reference State Cost
     for (unsigned int i = 0; i < N; i++) {
-        fg[0] += CppAD::pow(vars[cte_start + i], 2);
-        fg[0] += CppAD::pow(vars[epsi_start + i], 2);
-        fg[0] += CppAD::pow(vars[v_start + i] - ref_v, 2);
+        fg[0] += cte_weight * CppAD::pow(vars[cte_start + i], 2);
+        fg[0] += epsi_weight * CppAD::pow(vars[epsi_start + i], 2);
+        fg[0] += v_weight  * CppAD::pow(vars[v_start + i] - ref_v, 2);
     }
     
     // Minimize the use of actuators.
@@ -81,8 +89,8 @@ class FG_eval {
 
     // Minimize the value gap between sequential actuations.
     for (unsigned int i = 0; i < N - 2; i++) {
-      fg[0] += CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
-      fg[0] += CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
+      fg[0] += sequential_delta_weight * CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
+      fg[0] += sequential_a_weight * CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
     }
    
 
